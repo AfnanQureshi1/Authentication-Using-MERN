@@ -1,0 +1,31 @@
+=== Setting up MySQL on localhost ===
+
+1.	Create .env which contains environment variables. 
+2.	Add .env in .gitignore 
+3.	Change filename config/config.json
+4.	Modify config/config.js to use values from .env which have been created in step 1. 
+    Add module.export={} to the settings.
+5.	Create .sequelizerc with the following content.
+
+    'use strict';
+    require('dotenv').config();    // don't forget to require dotenv
+    const path = require('path');
+    module.exports = {
+    'config': path.resolve('config', 'config.js')
+    };
+
+6.	Update models/index.js
+    const config = require(__dirname + '/../config/config.js')[env];
+7.	npm install dotenv
+
+https://stackoverflow.com/questions/38757728/using-an-enviroment-variable-for-local-sequelize-configuration
+https://stackabuse.com/managing-environment-variables-in-node-js-with-dotenv/
+
+=== Setting on heroku === 
+Login to heroku admin console. 
+1. Choose an application. 
+2. Go to Overview. Add JawsDBMySQL in Installed-AddOns.
+3. Go to Setting. Open Config Vars. 
+   Check the value for JAWSDB_URL. This is the URL for MySQL.
+4. Add a new entry. NODE_ENV production 
+5. Open a MySQL Workbench and setup a new connection using the JAWSDB_URL.
